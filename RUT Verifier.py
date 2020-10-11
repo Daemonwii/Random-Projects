@@ -17,3 +17,4 @@ if verifier == 10:
 if verifier == 11:
     verifier = 0
 print("Verifier is " , verifier)
+a = input("Press enter to close.")
