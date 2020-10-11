@@ -16,5 +16,5 @@ if verifier == 10:
     verifier = "K"
 if verifier == 11:
     verifier = 0
-print("Verifier is " , verifier)
-a = input("Press enter to close.")
+print "Verifier is " , verifier
+input("Press enter to close.")
