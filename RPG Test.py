@@ -10,7 +10,10 @@ class Player:
         print 'MP:',self.mp
     def attack(self):
         print 'You attack!'
-        damage = random.randint(20,25)
+        if enemy.defending == False:
+            damage = random.randint(10,15)
+        else:
+            damage = random.randint(5,8)
         print 'You dealt',damage,'damage!'
         enemy.health -= damage
         print 'Enemy health:',enemy.health
@@ -21,45 +24,59 @@ class Player:
         print 'You heal yourself!'
         healing = random.randint(15,20)
         player.health += healing
+        if player.health > 100:
+            player.health = 100
         player.mp -= 10
         print 'You healed',healing,'HP, leaving you with',player.health,'health and',player.mp,'MP left!'
     def power_attack(self):
         print 'You imbue your sword with magic and lunge at the enemy!'
-        damage = random.randint(30,40)
-        print 'You dealt',damage,'damage, and spent 15 MP!'
+        if enemy.defending == False:
+            damage = random.randint(20,30)
+        else:
+            damage = random.randint(10,15)
+        print 'You dealt',damage,'damage, and spent 25 MP!'
         enemy.health -= damage
         print 'Enemy health:',enemy.health
-        player.mp -= 15
+        player.mp -= 25
+        print 'MP left:',player.mp
+
 class Enemy:
-    def __init__(self,health,mp):
+    def __init__(self,health,mp,defending):
         self.health = 100
         self.mp = 100
+        self.defending = False
     def attack(self):
         print 'You have been attacked!'
         if player.defending == False:
-            damage = random.randint(20,25)
+            damage = random.randint(10,15)
         else:
-            damage = random.randint(10,13)
+            damage = random.randint(5,8)
         print 'You have been dealt',damage,'damage!'
         player.health -= damage
         print 'Current health:',player.health
     def power_attack(self):
         print 'The enemy lunges at you with their claws, dealing massive damage!'
         if player.defending == False:
-            damage = random.randint(30,40)
+            damage = random.randint(20,30)
         else:
-            damage = random.randint(15,20)
+            damage = random.randint(10,20)
         print 'You take',damage,'damage!'
         player.health -= damage
         print 'Current health:',player.health
     def heal(self):
         print 'The enemy heals itself!'
-        healing = random.randint(5,10)
+        healing = random.randint(10,15)
         enemy.health += healing
+        if enemy.health > 100:
+            enemy.health = 100
         enemy.mp -= 15
         print 'The enemy healed',healing,',leaving it with',enemy.health,'health left!'
+    def defend(self):
+        print 'The enemy braces itself!'
+        self.defending = True
 player = Player(100,100,False)
-enemy = Enemy(100,100)
+enemy = Enemy(100,100,False)
+print 'You encounter a goblin!'
 while player.health >= 0 and enemy.health >= 0:
 
     if player.health <=0:
@@ -67,36 +84,56 @@ while player.health >= 0 and enemy.health >= 0:
     option = raw_input("What would you like to do? (Type help for command list) ")
     if option == 'status':
         player.status()
+        continue
     elif option == 'defend':
         player.defend()
     elif option == 'attack':
         player.attack()
     elif option == 'heal':
-        player.heal()
+        if player.mp >= 10:
+            player.heal()
+        else:
+            print "You don't have enough MP!"
+            continue
     elif option == 'power attack':
-        player.power_attack()
+        if player.mp >= 25:
+            player.power_attack()
+        else:
+            print "You don't have enough MP!"
+            continue
     elif option == 'help':
         print 'status: Check on your current stats'
         print 'attack: Deal damage to the enemy'
         print 'defend: Use your turn to take half damage from the enemy, if it attacks'
         print 'heal: use 10 MP to heal yourself 15-20 HP'
-        print 'power attack: use 15 MP to deal 30-40 damage to the enemy'
+        print 'power attack: use 25 MP to deal 20-30 damage to the enemy'
         continue
     else:
         print 'Invalid option.'
-        break
+        continue
     if enemy.health <=0:
         break
-    enemy_choice = random.randint(1,3)
+    enemy.defending = False
+    enemy_choice = random.randint(1,4)
     if enemy_choice == 1:
         enemy.attack()
-    if enemy_choice == 2:
-        enemy.power_attack()
-    if enemy_choice == 3:
+    elif enemy_choice == 2:
+        magic = random.randint(1,4)
+        if enemy.health <= 50:
+            if magic == 1 or enemy.mp < 15:
+                enemy.power_attack()
+            else:
+                enemy.heal()
+        else:
+            enemy.power_attack()
+    elif enemy_choice == 3:
         enemy.heal()
+    elif enemy_choice == 4:
+        enemy.defend()
     player.defending = False
 if player.health <= 0:
     print 'You have lost!'
 if enemy.health <= 0:
     print 'You won!'
+    print 'You earned',random.randint(500,600),'EXP!'
 input('Press enter to close.')
