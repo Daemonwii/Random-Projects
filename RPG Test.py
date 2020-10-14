@@ -64,6 +64,7 @@ while player.health >= 0 and enemy.health >= 0:
 
     if player.health <=0:
         break
+
     option = raw_input("What would you like to do? (Type help for command list) ")
     if option == 'status':
         player.status()
@@ -84,7 +85,7 @@ while player.health >= 0 and enemy.health >= 0:
         continue
     else:
         print 'Invalid option.'
-        break
+        continue
     if enemy.health <=0:
         break
     enemy_choice = random.randint(1,3)
@@ -99,4 +100,4 @@ if player.health <= 0:
     print 'You have lost!'
 if enemy.health <= 0:
     print 'You won!'
-input('Press enter to close.')
+raw_input('Press enter to close.')
