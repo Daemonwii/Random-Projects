@@ -1,7 +1,7 @@
 import random
 
 class Player:
-    def __init__(self,health,mp,defending,evading):
+    def __init__(self, health, mp, defending, evading):
         self.health = health
         self.mp = mp
         self.defending = False
