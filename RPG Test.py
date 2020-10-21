@@ -1,5 +1,5 @@
-import random
-
+import random,sys,time,functions
+print_slow = functions.print_slow
 class Player:
     def __init__(self,max_health,max_mp,health,mp,damage_bonus,defending,evading,EXP,level_EXP):
         self.max_health = max_health
@@ -15,60 +15,60 @@ class Player:
         print 'HP:',self.health
         print 'MP:',self.mp
     def attack(self):
-        print 'You attack!'
+        print_slow('You attack!\n')
         if enemy.defending == False:
             damage = self.damage_bonus + random.randint(10,15)
         else:
             damage = self.damage_bonus + random.randint(5,8)
-        print 'You dealt',damage,'damage!'
+        print_slow('You dealt '+str(damage)+' damage!\n')
         enemy.health -= damage
     def defend(self):
-        print 'You brace yourself!'
+        print_slow('You brace yourself!\n')
         self.defending = True
     def heal(self):
-        print 'You heal yourself!'
+        print_slow('You heal yourself!\n')
         healing = random.randint(15,20)
         player.health += healing
-        if player.health > 100:
-            player.health = 100
+        if player.health > player.max_health:
+            player.health = player.max_health
         player.mp -= 10
-        print 'You healed',healing,'HP, leaving you with',player.health,'health and',player.mp,'MP left!'
+        print_slow('You healed '+str(healing)+' HP, leaving you with '+str(player.health)+' health and '+str(player.mp)+' MP left!\n')
     def power_attack(self):
-        print 'You imbue your sword with magic and lunge at the enemy!'
+        print_slow('You imbue your sword with magic and lunge at the enemy!\n')
         if enemy.defending == False:
             damage = self.damage_bonus + random.randint(20,30)
         else:
             damage = self.damage_bonus + random.randint(10,15)
-        print 'You dealt',damage,'damage, and spent 25 MP!'
+        print_slow('You dealt '+str(damage)+' damage, and spent 25 MP!\n')
         enemy.health -= damage
         player.mp -= 25
-        print 'MP left:',player.mp
+        print_slow('MP left: '+str(player.mp)+'\n')
     def evade(self):
-        print 'You focus this turn on evading!'
+        print_slow('You focus this turn on evading!\n')
         self.evading = True
     def healthbar(self):
         if self.health == 100:
-            print 'Player health left: [//////////]'
+            print_slow('Player health left: [//////////]\n')
         elif self.health >= 90 and self.health < 100:
-            print 'Player health left: [/////////-]'
+            print_slow('Player health left: [/////////-]\n')
         elif self.health >= 80 and self.health < 90:
-            print 'Player health left: [////////--]'
+            print_slow('Player health left: [////////--]\n')
         elif self.health >= 70 and self.health < 80:
-            print 'Player health left: [///////---]'
+            print_slow('Player health left: [///////---]\n')
         elif self.health >= 60 and self.health < 70:
-            print 'Player health left: [//////----]'
+            print_slow('Player health left: [//////----]\n')
         elif self.health >= 50 and self.health < 60:
-            print 'Player health left: [/////-----]'
+            print_slow('Player health left: [/////-----]\n')
         elif self.health >= 40 and self.health < 50:
-            print 'Player health left: [////------]'
+            print_slow('Player health left: [////------]\n')
         elif self.health >= 30 and self.health < 40:
-            print 'Player health left: [///-------]'
+            print_slow('Player health left: [///-------]\n')
         elif self.health >= 20 and self.health < 30:
-            print 'Player health left: [//--------]'
+            print_slow('Player health left: [//--------]\n')
         elif self.health >= 10 and self.health < 20:
-            print 'Player health left: [/---------]'
+            print_slow('Player health left: [/---------]\n')
         elif self.health < 10:
-            print 'Player health left: [----------]'
+            print_slow('Player health left: [----------]\n')
     def inventory(self):
         print '[1] Health Potion: Heal 50 HP. In inventory:',health_potion.in_inventory
         print '[2] Big Health Potion: Heal to full HP. In inventory:',big_health_potion.in_inventory
@@ -78,7 +78,7 @@ class Player:
         print '[6] Bomb: Deal 60 damage to the enemy. In inventory:',bomb.in_inventory
         print '[0] Go back to the action menu'
     def level_up(self):
-        print 'You have leveled up! Your maximum health and mana has been increased by 10. Your damage has also been increased by 5!'
+        print_slow('You leveled up! Maximum health and mana increased by 10. Damage increased by 5!\n')
         self.max_health += 10
         self.max_mp += 10
         self.damage_bonus += 5
@@ -89,101 +89,101 @@ class Enemy:
         self.mp = mp
         self.defending = False
     def attack(self):
-        print 'You are being attacked!'
+        print_slow('You are being attacked!\n')
         if player.defending == False:
             damage = random.randint(10,15)
         else:
             damage = random.randint(5,8)
-        print 'You have been dealt',damage,'damage!'
+        print_slow('You have been dealt '+str(damage)+' damage!\n')
         player.health -= damage
     def power_attack(self):
-        print 'The enemy lunges at you, dealing massive damage!'
+        print_slow('The enemy lunges at you, dealing massive damage!\n')
         if player.defending == False:
             damage = random.randint(20,30)
         else:
             damage = random.randint(10,20)
-        print 'You take',damage,'damage!'
+        print_slow('You take '+str(damage)+' damage!\n')
         player.health -= damage
     def heal(self):
-        print 'The enemy heals itself!'
+        print_slow('The enemy heals itself!\n')
         healing = random.randint(10,15)
         self.health += healing
         if self.health > 100:
             self.health = 100
         self.mp -= 15
     def defend(self):
-        print 'The enemy braces itself!'
+        print_slow('The enemy braces itself!\n')
         self.defending = True
     def healthbar(self):
         if enemy_select == 1:
                 if self.health == 100:
-                    print 'Enemy health left:  [//////////]'
+                    print_slow('Enemy health left:  [//////////]\n')
                 elif self.health >= 90 and self.health < 100:
-                    print 'Enemy health left:  [/////////-]'
+                    print_slow('Enemy health left:  [/////////-]\n')
                 elif self.health >= 80 and self.health < 90:
-                    print 'Enemy health left:  [////////--]'
+                    print_slow('Enemy health left:  [////////--]\n')
                 elif self.health >= 70 and self.health < 80:
-                    print 'Enemy health left:  [///////---]'
+                    print_slow('Enemy health left:  [///////---]\n')
                 elif self.health >= 60 and self.health < 70:
-                    print 'Enemy health left:  [//////----]'
+                    print_slow('Enemy health left:  [//////----]\n')
                 elif self.health >= 50 and self.health < 60:
-                    print 'Enemy health left:  [/////-----]'
+                    print_slow('Enemy health left:  [/////-----]\n')
                 elif self.health >= 40 and self.health < 50:
-                    print 'Enemy health left:  [////------]'
+                    print_slow('Enemy health left:  [////------]\n')
                 elif self.health >= 30 and self.health < 40:
-                    print 'Enemy health left:  [///-------]'
+                    print_slow('Enemy health left:  [///-------]\n')
                 elif self.health >= 20 and self.health < 30:
-                    print 'Enemy health left:  [//--------]'
+                    print_slow('Enemy health left:  [//--------]\n')
                 elif self.health >= 10 and self.health < 20:
-                    print 'Enemy health left:  [/---------]'
+                    print_slow('Enemy health left:  [/---------]\n')
                 elif self.health < 10:
-                    print 'Enemy health left:  [----------]'
+                    print_slow('Enemy health left:  [----------]\n')
         elif enemy_select == 2:
                 if self.health == 60:
-                    print 'Enemy health left:  [//////////]'
+                    print_slow('Enemy health left:  [//////////]\n')
                 elif self.health >= 54 and self.health < 60:
-                    print 'Enemy health left:  [/////////-]'
+                    print_slow('Enemy health left:  [/////////-]\n')
                 elif self.health >= 48 and self.health < 54:
-                    print 'Enemy health left:  [////////--]'
+                    print_slow('Enemy health left:  [////////--]\n')
                 elif self.health >= 42 and self.health < 48:
-                    print 'Enemy health left:  [///////---]'
+                    print_slow('Enemy health left:  [///////---]\n')
                 elif self.health >= 36 and self.health < 42:
-                    print 'Enemy health left:  [//////----]'
+                    print_slow('Enemy health left:  [//////----]\n')
                 elif self.health >= 30 and self.health < 36:
-                    print 'Enemy health left:  [/////-----]'
+                    print_slow('Enemy health left:  [/////-----]\n')
                 elif self.health >= 24 and self.health < 30:
-                    print 'Enemy health left:  [////------]'
+                    print_slow('Enemy health left:  [////------]\n')
                 elif self.health >= 18 and self.health < 24:
-                    print 'Enemy health left:  [///-------]'
+                    print_slow('Enemy health left:  [///-------]\n')
                 elif self.health >= 12 and self.health < 18:
-                    print 'Enemy health left:  [//--------]'
+                    print_slow('Enemy health left:  [//--------]\n')
                 elif self.health >= 6 and self.health < 12:
-                    print 'Enemy health left:  [/---------]'
+                    print_slow('Enemy health left:  [/---------]\n')
                 elif self.health < 6:
-                    print 'Enemy health left:  [----------]'
+                    print_slow('Enemy health left:  [----------]\n')
         elif enemy_select == 3:
                 if self.health == 130:
-                    print 'Enemy health left:  [//////////]'
+                    print_slow('Enemy health left:  [//////////]\n')
                 elif self.health >= 117 and self.health < 130:
-                    print 'Enemy health left:  [/////////-]'
+                    print_slow('Enemy health left:  [/////////-]\n')
                 elif self.health >= 104 and self.health < 117:
-                    print 'Enemy health left:  [////////--]'
+                    print_slow('Enemy health left:  [////////--]\n')
                 elif self.health >= 91 and self.health < 104:
-                    print 'Enemy health left:  [///////---]'
+                    print_slow('Enemy health left:  [///////---]\n')
                 elif self.health >= 78 and self.health < 91:
-                    print 'Enemy health left:  [//////----]'
+                    print_slow('Enemy health left:  [//////----]\n')
                 elif self.health >= 65 and self.health < 78:
-                    print 'Enemy health left:  [/////-----]'
+                    print_slow('Enemy health left:  [/////-----]\n')
                 elif self.health >= 52 and self.health < 65:
-                    print 'Enemy health left:  [////------]'
+                    print_slow('Enemy health left:  [////------]\n')
                 elif self.health >= 39 and self.health < 52:
-                    print 'Enemy health left:  [///-------]'
+                    print_slow('Enemy health left:  [///-------]\n')
                 elif self.health >= 26 and self.health < 39:
-                    print 'Enemy health left:  [//--------]'
+                    print_slow('Enemy health left:  [//--------]\n')
                 elif self.health >= 13 and self.health < 26:
-                    print 'Enemy health left:  [/---------]'
+                    print_slow('Enemy health left:  [/---------]\n')
                 elif self.health < 13:
-                    print 'Enemy health left:  [----------]'
+                    print_slow('Enemy health left:  [----------]\n')
 class Item:
     def __init__ (self,hp_recovery,mp_recovery,item_damage,in_inventory):
         self.hp_recovery = hp_recovery
@@ -192,19 +192,19 @@ class Item:
         self.in_inventory = in_inventory
     def consume(self):
         if self.hp_recovery > 0:
-            print 'You healed',self.hp_recovery,'HP with your item!'
+            print_slow('You healed '+str(self.hp_recovery)+' HP with your item!\n')
             player.health += self.hp_recovery
-            if player.health > 100:
-                player.health = 100
+            if player.health > player.max_health:
+                player.health = player.max_health
             self.in_inventory -= 1
         elif self.mp_recovery > 0:
-            print 'You recovered',self.mp_recovery,'MP with your item!'
+            print_slow('You recovered '+str(self.mp_recovery)+' MP with your item!\n')
             player.health += mp_recovery
-            if player.mp > 100:
-                player.mp = 100
+            if player.mp > player.max_mp:
+                player.mp = player.max_mp
             self.in_inventory -= 1
         elif self.item_damage > 0:
-            print 'You dealt',self.item_damage,'damage with your item!'
+            print_slow('You dealt '+str(self.item_damage)+' damage with your item!\n')
             enemy.health -= self.item_damage
             self.in_inventory -= 1
     def restock(self):
@@ -230,13 +230,13 @@ while True:
     enemy_select = random.randint(1,3)
     if enemy_select == 1:
         enemy = rogue
-        print 'You encounter a rogue!'
+        print_slow('You encounter a rogue!\n')
     elif enemy_select == 2:
         enemy = slime
-        print 'You encounter a slime!'
+        print_slow('You encounter a slime!\n')
     elif enemy_select == 3:
         enemy = goblin
-        print 'You encounter a goblin!'
+        print_slow('You encounter a goblin!\n')
     while player.health >= 0 and enemy.health >= 0:
 
         if player.health <=0:
@@ -249,24 +249,24 @@ while True:
             player.defend()
         elif option == 'attack':
             if random.randint(1,10) == 1:
-                print 'You tried to attack, but you missed!'
+                print_slow('You tried to attack, but you missed!\n')
             else:
                 player.attack()
         elif option == 'heal':
             if player.mp >= 10:
                 player.heal()
             else:
-                print "You don't have enough MP!"
+                print_slow("You don't have enough MP!\n")
                 continue
         elif option == 'power attack':
             if player.mp >= 25:
                 if random.randint(1,10) == 1:
-                    print 'You imbue your sword with magic, but you take too long and the enemy sees your attack coming!'
+                    print_slow('You imbue your sword with magic, but you take too long and the enemy sees your attack coming!\n')
                     player.mp -= 25
                 else:
                     player.power_attack()
             else:
-                print "You don't have enough MP!"
+                print_slow("You don't have enough MP!\n")
                 continue
         elif option == 'help':
             print 'status: Check on your current HP and MP'
@@ -307,9 +307,9 @@ while True:
         enemy_choice = random.randint(1,4)
         if enemy_choice == 1:
             if player.evading == True and random.randint(1,5) == 1:
-                print 'The enemy tried to attack, but it missed!'
+                print_slow('The enemy tried to attack, but it missed!\n')
             elif player.evading == False and random.randint(1,10) == 1:
-                print 'The enemy tried to attack, but it missed!'
+                print_slow('The enemy tried to attack, but it missed!\n')
             else:
                 enemy.attack()
         elif enemy_choice == 2:
@@ -322,9 +322,9 @@ while True:
                         enemy.heal()
                 else:
                     if player.evading == True and random.randint(1,5) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     elif player.evading == False and random.randint(1,10) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     else:
                         enemy.power_attack()
             elif enemy_select == 2:
@@ -335,9 +335,9 @@ while True:
                         enemy.heal()
                 else:
                     if player.evading == True and random.randint(1,5) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     elif player.evading == False and random.randint(1,10) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     else:
                         enemy.power_attack()
             elif enemy_select == 3:
@@ -348,9 +348,9 @@ while True:
                         enemy.heal()
                 else:
                     if player.evading == True and random.randint(1,5) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     elif player.evading == False and random.randint(1,10) == 1:
-                        print 'The enemy tried to attack, but it missed!'
+                        print_slow('The enemy tried to attack, but it missed!\n')
                     else:
                         enemy.power_attack()
         elif enemy_choice == 3:
@@ -363,12 +363,12 @@ while True:
         enemy.healthbar()
 
     if player.health <= 0:
-        print 'You have lost!'
+        print_slow('You have lost!\n')
         break
     if enemy.health <= 0:
-        print 'You won!'
+        print_slow ('You won!\n')
         EXP_earned = random.randint(500,600)
-        print 'You earned',EXP_earned,'EXP!'
+        print_slow('You earned '+str(EXP_earned)+' EXP!\n')
         player.EXP += EXP_earned
         if player.EXP >= player.level_EXP:
             player.EXP -= player.level_EXP
